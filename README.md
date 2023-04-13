@@ -1,2 +1,16 @@
-# simple-memo
-simple-memo by Chrome extention
+# Explanation
+これはChrome拡張機能のメモ帳です。
+以下のインストール方法を確認して利用可能です。
+メモした内容はローカルに保存されます。
+
+## How to use
+
+### ▼ Step1
+Chromeで以下のURLにアクセスしてください。
+* [chrome://extensions/](chrome://extensions/)
+
+### ▼ Step2
+[ パッケージ化されていない拡張機能を読み込む ]ボタンを押し、対象のファイルをディレクトリ毎アップロードしてください。
+
+### ▼ Step3
+Chromeのツールバーにある「拡張機能」のアイコンより、ピン留めしてください。
