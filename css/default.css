@@ -1,0 +1,13 @@
+body {
+    min-width: 400px;
+    min-height: 300px;
+    background-color: #395984;
+}
+p {
+    color: #dee2e7;
+}
+textarea {
+    width: 30em;
+    line-height: 1.5;
+    height: 25em;
+}
