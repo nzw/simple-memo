@@ -2,12 +2,37 @@
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <script src="js/load.js"></script>
     <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/tab.css">
 </head>
 <body>
-    <textarea cols="50" row="50" id="contents" name="contents"></textarea>
+    <ul class="tab-list">
+      <li class="tab-list-item active">01</li>
+      <li class="tab-list-item">02</li>
+      <li class="tab-list-item">03</li>
+      <li class="tab-list-item">04</li>
+      <li class="tab-list-item">05</li>
+    </ul>
+    <div class="tab-contents">
+        <div class="tab-contents-item show">
+            <textarea cols="50" row="50" id="contents1" class="contents"></textarea>
+        </div>
+        <div class="tab-contents-item">
+            <textarea cols="50" row="50" id="contents2" class="contents"></textarea>
+        </div>
+        <div class="tab-contents-item">
+            <textarea cols="50" row="50" id="contents3" class="contents"></textarea>
+        </div>
+        <div class="tab-contents-item">
+            <textarea cols="50" row="50" id="contents4" class="contents"></textarea>
+        </div>
+        <div class="tab-contents-item">
+            <textarea cols="50" row="50" id="contents5" class="contents"></textarea>
+        </div>
+    </div>
     <p>自動保存します</p>
+    <script src="js/load.js"></script>
     <script src="js/save.js"></script>
+    <script src="js/tab.js"></script>
 </body>
 </html>

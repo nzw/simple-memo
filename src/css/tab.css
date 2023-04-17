@@ -1,0 +1,25 @@
+.tab-list {
+  list-style-type: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-btween;
+}
+.tab-list-item {
+  text-align: center;
+  flex: 0 10%;
+  color: #000;
+  background-color: #eee;
+  margin: 10px 0 -10px 0;
+  padding: 10px 0;
+}
+.tab-list-item.active {
+  color: #fff;
+  background-color: #1e78be;
+}
+
+.tab-contents-item {
+  display: none;
+}
+.tab-contents-item.show {
+  display: block;
+}
