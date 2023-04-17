@@ -1,3 +1,6 @@
+# Chrome Web Store URL
+* [SimpleMemoPad](https://chrome.google.com/webstore/detail/simplememopad/cmkfhbabkfoochglgdhpppjbdhkdnoeb)
+
 # Explanation
 これはChrome拡張機能のメモ帳です。  
 以下のインストール方法を確認して利用可能です。  
