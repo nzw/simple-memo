@@ -43,7 +43,7 @@
 .cp_tab > input:checked + label {
 	margin-bottom: -1px;
 	border-color: #cccccc;
-	border-bottom: 1px solid #ffffff;/*背景色と同じ*/
+	border-bottom: 1px solid #ffffff;
 	border-radius: 6px 6px 0 0;
 }
 .cp_tab .cp_tabpanel {

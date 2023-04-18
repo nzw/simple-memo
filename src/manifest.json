@@ -2,7 +2,7 @@
   "name": "SimpleMemoPad",
   "version": "1.0.0",
   "manifest_version": 3,
-  "description": "シンプルなメモ帳",
+  "description": "It is the best app for leaving a little memo when operating the browser.",
   "icons": {
     "16": "img/icon/16.png",
     "48": "img/icon/48.png",
@@ -13,7 +13,7 @@
 		"16": "img/icon/16.png",
 		"32": "img/icon/32.png"
 	},
-	"default_title": "メモ帳",
+	"default_title": "MemoPad",
   	"default_popup": "popup.html"
   },
   "permissions": [
