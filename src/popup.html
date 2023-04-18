@@ -6,33 +6,47 @@
     <link rel="stylesheet" href="css/tab.css">
 </head>
 <body>
-    <ul class="tab-list">
-      <li class="tab-list-item active">01</li>
-      <li class="tab-list-item">02</li>
-      <li class="tab-list-item">03</li>
-      <li class="tab-list-item">04</li>
-      <li class="tab-list-item">05</li>
-    </ul>
-    <div class="tab-contents">
-        <div class="tab-contents-item show">
-            <textarea cols="50" row="50" id="contents1" class="contents"></textarea>
-        </div>
-        <div class="tab-contents-item">
-            <textarea cols="50" row="50" id="contents2" class="contents"></textarea>
-        </div>
-        <div class="tab-contents-item">
-            <textarea cols="50" row="50" id="contents3" class="contents"></textarea>
-        </div>
-        <div class="tab-contents-item">
-            <textarea cols="50" row="50" id="contents4" class="contents"></textarea>
-        </div>
-        <div class="tab-contents-item">
-            <textarea cols="50" row="50" id="contents5" class="contents"></textarea>
+    <div class="cp_tab">
+        <input type="radio" name="cp_tab" id="tab1_1" aria-controls="first_tab01 active" checked>
+        <label for="tab1_1">1</label>
+        <input type="radio" name="cp_tab" id="tab1_2" aria-controls="second_tab01">
+        <label for="tab1_2">2</label>
+        <input type="radio" name="cp_tab" id="tab1_3" aria-controls="third_tab01">
+        <label for="tab1_3">3</label>
+        <input type="radio" name="cp_tab" id="tab1_4" aria-controls="force_tab01">
+        <label for="tab1_4">4</label>
+        <input type="radio" name="cp_tab" id="tab1_5" aria-controls="five_tab01">
+        <label for="tab1_5">5</label>
+        <input type="radio" name="cp_tab" id="tab1_6" aria-controls="six_tab01">
+        <label for="tab1_6">6</label>
+        <input type="radio" name="cp_tab" id="tab1_7" aria-controls="seven_tab01">
+        <label for="tab1_7">7</label>
+        <div class="cp_tabpanels">
+            <div id="first_tab01" class="cp_tabpanel show">
+                <textarea cols="50" row="50" id="contents1" class="contents"></textarea>
+            </div>
+            <div id="second_tab01" class="cp_tabpanel">
+                <textarea cols="50" row="50" id="contents2" class="contents"></textarea>
+            </div>
+            <div id="third_tab01" class="cp_tabpanel">
+                <textarea cols="50" row="50" id="contents3" class="contents"></textarea>
+            </div>
+            <div id="force_tab01" class="cp_tabpanel">
+                <textarea cols="50" row="50" id="contents4" class="contents"></textarea>
+            </div>
+            <div id="five_tab01" class="cp_tabpanel">
+                <textarea cols="50" row="50" id="contents5" class="contents"></textarea>
+            </div>
+            <div id="six_tab01" class="cp_tabpanel">
+                <textarea cols="50" row="50" id="contents6" class="contents"></textarea>
+            </div>
+            <div id="seven_tab01" class="cp_tabpanel">
+                <textarea cols="50" row="50" id="contents7" class="contents"></textarea>
+            </div>
         </div>
     </div>
-    <p>自動保存します</p>
+    <p>Auto save...</p>
     <script src="js/load.js"></script>
     <script src="js/save.js"></script>
-    <script src="js/tab.js"></script>
 </body>
 </html>
