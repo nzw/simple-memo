@@ -157,18 +157,18 @@
 }
 
 .gg-copy::before {
-background:
-linear-gradient( to left,
-currentColor 5px, transparent 0)
-no-repeat right top/5px 2px,
-linear-gradient( to left,
-currentColor 5px, transparent 0)
-no-repeat left bottom/ 2px 5px;
-box-shadow: inset -4px -4px 0 -2px;
-bottom: -6px;
-right: -6px;
-width: 14px;
-height: 18px
+    background:
+    linear-gradient( to left,
+    currentColor 5px, transparent 0)
+    no-repeat right top/5px 2px,
+    linear-gradient( to left,
+    currentColor 5px, transparent 0)
+    no-repeat left bottom/ 2px 5px;
+    box-shadow: inset -4px -4px 0 -2px;
+    bottom: -6px;
+    right: -6px;
+    width: 14px;
+    height: 18px
 }
 
 .gg-copy::after {
