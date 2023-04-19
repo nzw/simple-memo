@@ -2,17 +2,16 @@ body {
     min-width: 440px;
     min-height: 400px;
 }
+
 .contents {
     width: 30em;
-    line-height: 1.5;
     height: 25em;
+    line-height: 1.5;
     padding: 0 5px;
     border-radius: 4px;
     border: none;
     box-shadow: 0 0 0 1px #ccc inset;
-    appearance: none;
     -webkit-appearance: none;
-    -moz-appearance: none;
 }
 
 .contents:focus {
