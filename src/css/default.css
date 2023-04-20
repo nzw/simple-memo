@@ -27,3 +27,11 @@ body {
 .footer {
     display: block;
 }
+
+a {
+  color: #808080;
+}
+
+a:hover {
+  color: #c0c0c0;
+}
