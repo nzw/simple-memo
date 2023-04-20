@@ -12,6 +12,7 @@ body {
     border: none;
     box-shadow: 0 0 0 1px #ccc inset;
     -webkit-appearance: none;
+    font-size: 1.5em;
 }
 
 .contents:focus {
@@ -34,4 +35,9 @@ a {
 
 a:hover {
   color: #c0c0c0;
+}
+
+.font-size {
+  margin-left: 15px;
+	font-size: 1em;
 }
