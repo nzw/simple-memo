@@ -4,7 +4,8 @@ download.addEventListener('click', (e) => {
     let len          = textareas.length;
     let textfile     = '';
     for (let i = 0; i < len; i++) {
-        textfile += `\n=[${i}]============\n\n${textareas[i].value}\n`;
+        let memo_no = i + 1;
+        textfile += `/***** [tab: ${memo_no}] *****/\n${textareas[i].value}\n\n`;
     }
     const blob = new Blob([textfile], { type: 'text/plain' });
     e.currentTarget.href = window.URL.createObjectURL(blob);
