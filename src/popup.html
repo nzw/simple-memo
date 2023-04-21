@@ -7,6 +7,24 @@
     <link rel="stylesheet" href="css/tab.css">
 </head>
 <body>
+    <div>
+      <label class="font-size">Font size:
+        <select id="font-size">
+          <option value="0.5">0.5em</option>
+          <option value="1" selected>1em</option>
+          <option value="1.25">1.25em</option>
+          <option value="1.5">1.5em</option>
+          <option value="1.75">1.75em</option>
+          <option value="2">2em</option>
+          <option value="2.5">2.5em</option>
+          <option value="3">3em</option>
+          <option value="3.5">3.5em</option>
+          <option value="4">4em</option>
+          <option value="4.5">4.5em</option>
+          <option value="5">5em</option>
+        </select>
+      </label>
+    </div>
     <div class="cp_tab">
         <input type="radio" name="cp_tab" id="tab1_1" aria-controls="first_tab01 active" checked>
         <label for="tab1_1">1</label>
@@ -49,22 +67,7 @@
     <div class="footer">
         <p class="msg">Auto save in local env...</p>
         <br />
-        <label class="font-size">フォントサイズ:
-          <select id="font-size">
-            <option value="0.5">0.5em</option>
-            <option value="1" selected>1em</option>
-            <option value="1.25">1.25em</option>
-            <option value="1.5">1.5em</option>
-            <option value="1.75">1.75em</option>
-            <option value="2">2em</option>
-            <option value="2.5">2.5em</option>
-            <option value="3">3em</option>
-            <option value="3.5">3.5em</option>
-            <option value="4">4em</option>
-            <option value="4.5">4.5em</option>
-            <option value="5">5em</option>
-          </select>
-        </label>
+        <a href="#" id="close" class="round_btn"></a>
         <a class="gg-software-download" href="#" id="download" download="SimpleMemoPad.txt"></a>
         <p id="zoom-out" class="dli-zoom-out"><span></span></p>
         <p id="zoom-in" class="dli-zoom-in"><span></span></p>

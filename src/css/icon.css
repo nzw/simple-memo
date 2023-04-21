@@ -179,3 +179,37 @@
     top: 2px;
     box-shadow: 0 4px 0,0 8px 0
 }
+
+.round_btn {
+  display: block;
+  position: relative;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #333;
+  border-radius: 50%;
+  background: #ffe4e1;
+  transition: all 1s; /* アニメーション設定 */
+  margin: 5px 0 -15px 10px;
+}
+
+.round_btn::before, .round_btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 7px;
+  background: #333;
+}
+
+.round_btn::before {
+  transform: translate(-50%,-50%) rotate(45deg);
+}
+
+.round_btn::after {
+  transform: translate(-50%,-50%) rotate(-45deg);
+}
+
+.round_btn:hover { /* マウスオーバー時のスタイル */
+    transform: rotate(360deg);
+}

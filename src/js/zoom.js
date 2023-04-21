@@ -1,6 +1,4 @@
 let zoom_in   = document.querySelector('#zoom-in');
-let zoom_out  = document.querySelector('#zoom-out');
-let font_size = document.querySelector('#font-size');
 zoom_in.addEventListener('click', () => {
     let textareas    = document.querySelectorAll('.contents');
     let len          = textareas.length;
@@ -12,6 +10,8 @@ zoom_in.addEventListener('click', () => {
         textareas[i].style = textarea_css;
     }
 });
+
+let zoom_out  = document.querySelector('#zoom-out');
 zoom_out.addEventListener('click', () => {
     let textareas    = document.querySelectorAll('.contents');
     let len          = textareas.length;
@@ -23,6 +23,8 @@ zoom_out.addEventListener('click', () => {
         textareas[i].style = textarea_css;
     }
 });
+
+let font_size = document.querySelector('#font-size');
 font_size.addEventListener('change', (e) => {
     let textareas = document.querySelectorAll('.contents');
     let len       = textareas.length;
@@ -36,4 +38,13 @@ font_size.addEventListener('change', (e) => {
         textareas[i].style.fontSize = `${font}em`;
         if (size) textareas[i].style.width = '760px';
     }
+});
+
+let close = document.querySelector('#close');
+close.addEventListener('click', (e) => {
+  if (/Chrome/i.test(navigator.userAgent)) {
+    window.close();
+  } else {
+    window.open('about:blank', '_self').close();
+  }
 });
