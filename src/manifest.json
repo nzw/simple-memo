@@ -16,6 +16,14 @@
 	"default_title": "MemoPad",
   	"default_popup": "popup.html"
   },
+  "commands": {
+    "_execute_action": {
+        "suggested_key": {
+            "default": "Ctrl+Shift+P",
+            "mac": "MacCtrl+Shift+P"
+        }
+    }
+  },
   "permissions": [
     "storage"
   ]
