@@ -1,23 +1,38 @@
 setTimeout(() => {
-    const tab_set   = 'color:skyblue;font-weight: bold;';
-    const tab_reset = 'color:black;font-weight: normal;';
-    let label_list  = document.querySelectorAll('.cp_tab > label');
-    let textarea_value_list = document.querySelectorAll('.contents');
-    let len = textarea_value_list.length;
-    let save = () => {
-        let save_contents = [];
-        let select_id = document.querySelector('[name="cp_tab"]:checked')['id'];
-        for (let i = 0; i < len; i++) {
-            let val = textarea_value_list[i].value;
-            label_list[i].style = val ? tab_set : tab_reset;
-            save_contents.push(val);
-            document.getElementById('inputlength'+(i+1)).innerHTML = "length: " + val.length;
-        }
-        save_contents.push(select_id.replace('tab1_', ''));
-        chrome.storage.local.set({'save_content': save_contents});
+  try {
+    const TAB_SET_STYLE = 'color:skyblue;font-weight: bold;';
+    const TAB_RESET_STYLE = 'color:black;font-weight: normal;';
+
+    let labelList = document.querySelectorAll('.cp_tab > label');
+    if (!labelList.length) throw new Error("Labels not found");
+
+    let textareaList = document.querySelectorAll('.contents');
+    if (!textareaList.length) throw new Error("Textareas not found");
+
+    const save = () => {
+      let saveContents = [];
+      let selectedTab = document.querySelector('[name="cp_tab"]:checked');
+      if (!selectedTab) return;
+
+      let selectedTabId = selectedTab.id;
+      textareaList.forEach((textarea, index) => {
+        let value = textarea.value;
+        labelList[index].style = value ? TAB_SET_STYLE : TAB_RESET_STYLE;
+        saveContents.push(value);
+
+        let lengthElement = document.getElementById(`inputlength${index + 1}`);
+        lengthElement.innerHTML = `length: ${value.length}`;
+      });
+
+      saveContents.push(selectedTabId.replace('tab1_', ''));
+      chrome.storage.local.set({ 'save_content': saveContents });
     };
-    for (let i = 0; i < len; i++) {
-        textarea_value_list[i].addEventListener('keyup', save, false);
-        textarea_value_list[i].addEventListener('keydown', save, false);
-    }
+
+    textareaList.forEach((textarea) => {
+      textarea.addEventListener('keyup', save, false);
+      textarea.addEventListener('keydown', save, false);
+    });
+  } catch (error) {
+    console.error(`An error occurred: ${error.message}`);
+  }
 }, 100);

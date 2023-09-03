@@ -1,50 +1,67 @@
-let zoom_in   = document.querySelector('#zoom-in');
-zoom_in.addEventListener('click', () => {
-    let textareas    = document.querySelectorAll('.contents');
-    let len          = textareas.length;
-    let body         = document.body;
-    let textarea_css = 'width: 760px; height: 460px;';
+try {
+  let zoomIn = document.querySelector('#zoom-in');
+  if (!zoomIn) throw new Error("Zoom-in button not found");
 
-    body.style       = 'width: 780px; height: 480px;';
-    for (let i = 0; i < len; i++) {
-        textareas[i].style = textarea_css;
-    }
-});
-
-let zoom_out  = document.querySelector('#zoom-out');
-zoom_out.addEventListener('click', () => {
-    let textareas    = document.querySelectorAll('.contents');
-    let len          = textareas.length;
-    let body         = document.body;
-
-    body.style       = 'width: 440px; height: 400px;';
-    let textarea_css = 'width: 400px; height: 333px;';
-    for (let i = 0; i < len; i++) {
-        textareas[i].style = textarea_css;
-    }
-});
-
-let font_size = document.querySelector('#font-size');
-font_size.addEventListener('change', (e) => {
+  zoomIn.addEventListener('click', () => {
     let textareas = document.querySelectorAll('.contents');
-    let len       = textareas.length;
-    let body      = document.body;
-    let font      = e.target.value;
-    let size      = font > 14 ? 1 : 0;
+    if (!textareas.length) throw new Error("Textareas not found");
 
-    body.style.width  =  size ? 'width: 780px;' : 'width: 440px;';
-    body.style.height =  size ? 'height: 480px;' : 'height: 400px;';
-    for (let i = 0; i < len; i++) {
-        textareas[i].style.fontSize = `${font}em`;
-        if (size) textareas[i].style.width = '760px';
+    let body = document.body;
+    let textareaStyle = 'width: 760px; height: 460px;';
+    body.style = 'width: 780px; height: 480px;';
+
+    textareas.forEach((textarea) => {
+      textarea.style = textareaStyle;
+    });
+  });
+
+  let zoomOut = document.querySelector('#zoom-out');
+  if (!zoomOut) throw new Error("Zoom-out button not found");
+
+  zoomOut.addEventListener('click', () => {
+    let textareas = document.querySelectorAll('.contents');
+    if (!textareas.length) throw new Error("Textareas not found");
+
+    let body = document.body;
+    let textareaStyle = 'width: 400px; height: 333px;';
+    body.style = 'width: 440px; height: 400px;';
+
+    textareas.forEach((textarea) => {
+      textarea.style = textareaStyle;
+    });
+  });
+
+  let fontSize = document.querySelector('#font-size');
+  if (!fontSize) throw new Error("Font-size control not found");
+
+  fontSize.addEventListener('change', (e) => {
+    let textareas = document.querySelectorAll('.contents');
+    if (!textareas.length) throw new Error("Textareas not found");
+
+    let body = document.body;
+    let font = e.target.value;
+    let sizeCondition = font > 14 ? 1 : 0;
+
+    body.style.width = sizeCondition ? '780px' : '440px';
+    body.style.height = sizeCondition ? '480px' : '400px';
+
+    textareas.forEach((textarea) => {
+      textarea.style.fontSize = `${font}em`;
+      if (sizeCondition) textarea.style.width = '760px';
+    });
+  });
+
+  let closeBtn = document.querySelector('#close');
+  if (!closeBtn) throw new Error("Close button not found");
+
+  closeBtn.addEventListener('click', () => {
+    if (/Chrome/i.test(navigator.userAgent)) {
+      window.close();
+    } else {
+      window.open('about:blank', '_self').close();
     }
-});
+  });
 
-let close = document.querySelector('#close');
-close.addEventListener('click', (e) => {
-  if (/Chrome/i.test(navigator.userAgent)) {
-    window.close();
-  } else {
-    window.open('about:blank', '_self').close();
-  }
-});
+} catch (error) {
+  console.error(`An error occurred: ${error.message}`);
+}

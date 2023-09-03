@@ -1,12 +1,22 @@
-let download = document.getElementById('download');
-download.addEventListener('click', (e) => {
-    let textareas    = document.querySelectorAll('.contents');
-    let len          = textareas.length;
-    let textfile     = '';
-    for (let i = 0; i < len; i++) {
-        let memo_no = i + 1;
-        textfile += `/***** [tab: ${memo_no}] *****/\n${textareas[i].value}\n\n`;
-    }
-    const blob = new Blob([textfile], { type: 'text/plain' });
-    e.currentTarget.href = window.URL.createObjectURL(blob);
-});
+try {
+  let downloadBtn = document.getElementById('download');
+  if (!downloadBtn) throw new Error("Download button not found");
+
+  downloadBtn.addEventListener('click', (e) => {
+    let textareas = document.querySelectorAll('.contents');
+    if (!textareas.length) throw new Error("Textareas not found");
+
+    let textFileContent = '';
+
+    textareas.forEach((textarea, index) => {
+      let memoNumber = index + 1;
+      textFileContent += `/***** [tab: ${memoNumber}] *****/\n${textarea.value}\n\n`;
+    });
+
+    const textBlob = new Blob([textFileContent], { type: 'text/plain' });
+    e.currentTarget.href = window.URL.createObjectURL(textBlob);
+  });
+
+} catch (error) {
+  console.error(`An error occurred: ${error.message}`);
+}

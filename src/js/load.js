@@ -1,15 +1,31 @@
 chrome.storage.local.get('save_content', (items) => {
-    const tab_set   = 'color:skyblue;font-weight: bold;';
-    const tab_reset = 'color:black;font-weight: normal;';
-    let label_list  = document.querySelectorAll('.cp_tab > label');
-    let save_contents = items.save_content || '';
-    let textarea_value_list = document.querySelectorAll('.contents');
-    let len = save_contents.length;
-    for (let i = 0; i < len - 1; i++) {
-        let val = save_contents[i];
-        label_list[i].style = val ? tab_set : tab_reset;
-        textarea_value_list[i].value = val;
-        document.getElementById('inputlength'+(i+1)).innerHTML = "word count: " + val.length;
+  try {
+    const TAB_SET_STYLE = 'color:skyblue;font-weight: bold;';
+    const TAB_RESET_STYLE = 'color:black;font-weight: normal;';
+
+    let labelList = document.querySelectorAll('.cp_tab > label');
+    if (!labelList.length) throw new Error("Labels not found");
+
+    let textareaList = document.querySelectorAll('.contents');
+    if (!textareaList.length) throw new Error("Textareas not found");
+
+    let saveContents = items.save_content || [];
+    if (!saveContents.length) throw new Error("No saved content found");
+
+    labelList.forEach((label, index) => {
+      let value = saveContents[index];
+      label.style = value ? TAB_SET_STYLE : TAB_RESET_STYLE;
+      textareaList[index].value = value;
+
+      let lengthElement = document.getElementById(`inputlength${index + 1}`);
+      lengthElement.innerHTML = `length: ${value.length}`;
+    });
+
+    let lastItem = saveContents[saveContents.length - 1];
+    if (lastItem > 0) {
+      document.querySelectorAll('[name="cp_tab"]')[lastItem - 1].checked = true;
     }
-    if (save_contents[len-1] > 0) document.querySelectorAll('[name="cp_tab"]')[save_contents[len-1]-1].checked = true;
+  } catch (error) {
+    console.error(`An error occurred: ${error.message}`);
+  }
 });
