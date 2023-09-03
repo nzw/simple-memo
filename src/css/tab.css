@@ -66,3 +66,7 @@
 		padding: .5em 2em;
 	}
 }
+.char-right {
+    margin-right: 10px;
+    color: skyblue;
+}

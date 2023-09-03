@@ -11,6 +11,7 @@ setTimeout(() => {
             let val = textarea_value_list[i].value;
             label_list[i].style = val ? tab_set : tab_reset;
             save_contents.push(val);
+            document.getElementById('inputlength'+(i+1)).innerHTML = "length: " + val.length;
         }
         save_contents.push(select_id.replace('tab1_', ''));
         chrome.storage.local.set({'save_content': save_contents});

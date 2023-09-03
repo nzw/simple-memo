@@ -23,6 +23,8 @@ body {
 .msg {
     margin: -10px 0 0 15px;
     color: #b56969;
+    display: flex;
+    justify-content: space-between;
 }
 
 .footer {
