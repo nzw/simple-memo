@@ -6,50 +6,87 @@
 	margin: 1em auto;
 }
 
-.cp_tab > input[type='radio'] {
-	margin: 0;
-	padding: 0;
-	border: none;
-	border-radius: 0;
-	outline: none;
-	background: none;
-	-webkit-appearance: none;
-	display: none;
-}
-
 .cp_tab .cp_tabpanel {
 	display: none;
 }
 
-.cp_tab > input:first-child:checked ~ .cp_tabpanels > .cp_tabpanel:first-child,
-.cp_tab > input:nth-child(3):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(2),
-.cp_tab > input:nth-child(5):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(3),
-.cp_tab > input:nth-child(7):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(4),
-.cp_tab > input:nth-child(9):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(5),
-.cp_tab > input:nth-child(11):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(6),
-.cp_tab > input:nth-child(13):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(7) {
+.cp_tab .cp_tabpanel.show {
 	display: block;
 }
 
-.cp_tab > label {
+.cp_tab .tab {
 	position: relative;
 	display: inline-block;
 	padding: 15px;
 	cursor: pointer;
 	border: 1px solid transparent;
 	border-bottom: 0;
+	user-select: none;
 }
 
-.cp_tab > label:hover,
-.cp_tab > input:focus + label {
+.cp_tab .tab:hover,
+.cp_tab .tab:focus-visible {
 	color: #0066cc;
 }
 
-.cp_tab > input:checked + label {
+.cp_tab .tab.filled {
+	color: skyblue;
+	font-weight: bold;
+}
+
+.cp_tab .tab.active {
 	margin-bottom: -1px;
 	border-color: #cccccc;
 	border-bottom: 1px solid #ffffff;
 	border-radius: 6px 6px 0 0;
+}
+
+.cp_tab .tab.dragging {
+	opacity: .4;
+}
+
+.cp_tab .tab.drop-before {
+	box-shadow: inset 2px 0 0 rgb(33, 150, 243);
+}
+
+.cp_tab .tab.drop-after {
+	box-shadow: inset -2px 0 0 rgb(33, 150, 243);
+}
+
+.cp_tab .tab-del {
+	margin-left: .4em;
+	color: #aaaaaa;
+	font-weight: normal;
+}
+
+.cp_tab .tab-del:hover {
+	color: #b56969;
+}
+
+.cp_tab .tab-del.disabled,
+.cp_tab .tab-del.disabled:hover {
+	color: #dddddd;
+	cursor: not-allowed;
+}
+
+.cp_tab .tab-add {
+	display: inline-block;
+	padding: .3em .6em;
+	border: none;
+	background: none;
+	color: #808080;
+	font-size: 1.2em;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.cp_tab .tab-add:hover {
+	color: #0066cc;
+}
+
+.cp_tab .tab-add:disabled {
+	color: #dddddd;
+	cursor: not-allowed;
 }
 
 .cp_tab .cp_tabpanel {
@@ -62,7 +99,7 @@
 		width: 100%;
 		font-size: 1em;
 	}
-	.cp_tab label {
+	.cp_tab .tab {
 		padding: .5em 2em;
 	}
 }

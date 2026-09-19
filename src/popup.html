@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/icon.css">
     <link rel="stylesheet" href="css/tab.css">
+    <script src="js/mode.js"></script>
 </head>
 <body>
     <div>
@@ -26,50 +27,8 @@
       </label>
     </div>
     <div class="cp_tab">
-        <input type="radio" name="cp_tab" id="tab1_1" aria-controls="first_tab01 active" checked>
-        <label for="tab1_1">1</label>
-        <input type="radio" name="cp_tab" id="tab1_2" aria-controls="second_tab01">
-        <label for="tab1_2">2</label>
-        <input type="radio" name="cp_tab" id="tab1_3" aria-controls="third_tab01">
-        <label for="tab1_3">3</label>
-        <input type="radio" name="cp_tab" id="tab1_4" aria-controls="force_tab01">
-        <label for="tab1_4">4</label>
-        <input type="radio" name="cp_tab" id="tab1_5" aria-controls="five_tab01">
-        <label for="tab1_5">5</label>
-        <input type="radio" name="cp_tab" id="tab1_6" aria-controls="six_tab01">
-        <label for="tab1_6">6</label>
-        <input type="radio" name="cp_tab" id="tab1_7" aria-controls="seven_tab01">
-        <label for="tab1_7">7</label>
-        <div class="cp_tabpanels">
-            <div id="first_tab01" class="cp_tabpanel show">
-                <textarea cols="50" row="50" id="contents1" class="contents"></textarea>
-                <span id="inputlength1" class="char-right">length: 0</span>
-            </div>
-            <div id="second_tab01" class="cp_tabpanel">
-                <textarea cols="50" row="50" id="contents2" class="contents"></textarea>
-                <span id="inputlength2" class="char-right">length: 0</span>
-            </div>
-            <div id="third_tab01" class="cp_tabpanel">
-                <textarea cols="50" row="50" id="contents3" class="contents"></textarea>
-                <span id="inputlength3" class="char-right">length: 0</span>
-            </div>
-            <div id="force_tab01" class="cp_tabpanel">
-                <textarea cols="50" row="50" id="contents4" class="contents"></textarea>
-                <span id="inputlength4" class="char-right">length: 0</span>
-            </div>
-            <div id="five_tab01" class="cp_tabpanel">
-                <textarea cols="50" row="50" id="contents5" class="contents"></textarea>
-                <span id="inputlength5" class="char-right">length: 0</span>
-            </div>
-            <div id="six_tab01" class="cp_tabpanel">
-                <textarea cols="50" row="50" id="contents6" class="contents"></textarea>
-                <span id="inputlength6" class="char-right">length: 0</span>
-            </div>
-            <div id="seven_tab01" class="cp_tabpanel">
-                <textarea cols="50" row="50" id="contents7" class="contents"></textarea>
-                <span id="inputlength7" class="char-right">length: 0</span>
-            </div>
-        </div>
+        <div id="tab-bar" class="tab-bar" role="tablist"></div>
+        <div id="tab-panels" class="cp_tabpanels"></div>
     </div>
     <div class="footer">
         <span class="msg">
@@ -80,10 +39,14 @@
         <a class="gg-software-download" href="#" id="download" download="SimpleMemoPad.txt"></a>
         <p id="zoom-out" class="dli-zoom-out"><span></span></p>
         <p id="zoom-in" class="dli-zoom-in"><span></span></p>
+        <a href="#" id="pin" class="pin-btn" title="サイドパネルに固定">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"/></svg>
+            <span>サイドパネルに固定</span>
+        </a>
     </div>
-    <script src="js/load.js"></script>
-    <script src="js/save.js"></script>
+    <script src="js/tabs.js"></script>
     <script src="js/zoom.js"></script>
     <script src="js/download.js"></script>
+    <script src="js/pin.js"></script>
 </body>
 </html>

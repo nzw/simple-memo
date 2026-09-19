@@ -1,7 +1,8 @@
 {
   "name": "SimpleMemoPad",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "manifest_version": 3,
+  "minimum_chrome_version": "116",
   "description": "This app is a simple memo pad.",
   "icons": {
     "16": "img/icon/16.png",
@@ -24,7 +25,11 @@
         }
     }
   },
+  "side_panel": {
+    "default_path": "popup.html?mode=panel"
+  },
   "permissions": [
-    "storage"
+    "storage",
+    "sidePanel"
   ]
 }

@@ -48,3 +48,74 @@ textarea {
     max-width: 780px;
     max-height: 400px;
 }
+
+.pin-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    float: right;
+    margin: -6px 14px 15px 0;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgb(33, 150, 243);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+}
+
+.pin-btn:hover {
+    background: rgb(25, 118, 210);
+    color: #ffffff;
+}
+
+/* Side panel (popup.html?mode=panel): follow the panel's width and height */
+/* The memo area takes whatever height the tab rows and footer leave. */
+.panel body {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 16px);
+    min-width: 0;
+    min-height: 0;
+}
+
+.panel .cp_tab,
+.panel .cp_tabpanels {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.panel .cp_tab .tab {
+    padding: .5em 1em;
+}
+
+.panel .cp_tab .cp_tabpanel {
+    padding: .5em 0;
+}
+
+.panel .cp_tab .cp_tabpanel.show {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
+
+.panel .contents {
+    box-sizing: border-box;
+    flex: 1;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 120px;
+    max-height: none;
+}
+
+.panel #zoom-in,
+.panel #zoom-out,
+.panel #pin {
+    display: none;
+}

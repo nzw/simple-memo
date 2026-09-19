@@ -1,4 +1,7 @@
 try {
+  // In the side panel the width follows the panel, so never pin it to fixed px.
+  const isPanel = document.documentElement.classList.contains('panel');
+
   let zoomIn = document.querySelector('#zoom-in');
   if (!zoomIn) throw new Error("Zoom-in button not found");
 
@@ -42,12 +45,14 @@ try {
     let font = e.target.value;
     let sizeCondition = font > 14 ? 1 : 0;
 
-    body.style.width = sizeCondition ? '780px' : '440px';
-    body.style.height = sizeCondition ? '480px' : '400px';
+    if (!isPanel) {
+      body.style.width = sizeCondition ? '780px' : '440px';
+      body.style.height = sizeCondition ? '480px' : '400px';
+    }
 
     textareas.forEach((textarea) => {
       textarea.style.fontSize = `${font}em`;
-      if (sizeCondition) textarea.style.width = '760px';
+      if (sizeCondition && !isPanel) textarea.style.width = '760px';
     });
   });
 
@@ -55,7 +60,11 @@ try {
   if (!closeBtn) throw new Error("Close button not found");
 
   closeBtn.addEventListener('click', () => {
-    if (/Chrome/i.test(navigator.userAgent)) {
+    if (isPanel && chrome.sidePanel && chrome.sidePanel.close) {
+      chrome.windows.getCurrent((win) => {
+        chrome.sidePanel.close({ windowId: win.id }).catch(() => window.close());
+      });
+    } else if (/Chrome/i.test(navigator.userAgent)) {
       window.close();
     } else {
       window.open('about:blank', '_self').close();
