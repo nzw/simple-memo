@@ -55,6 +55,34 @@ A simple memo pad. Keep autosaved notes in tabs, in a popup or the side panel.
 Chrome拡張でブラウザ操作中に少しメモを残すのに最適なシンプルメモ帳アプリです。最大20タブでのメモ保持やファイル保存が可能で、サイドパネルに固定すればページを見ながら書き続けられます。
 ```
 
+## プライバシーへの取り組み（Privacy practices タブ）
+
+権限ごとに理由の記入が要る。書いていない権限があると提出できない。
+v1.6.0 で `sidePanel` が増えたので、下の 2 つを入れる。
+
+### 単一用途（Single purpose）
+
+```text
+SimpleMemoPad is a memo pad. It lets the user write short notes in tabs and keeps them in the browser, in a popup or in the side panel.
+```
+
+### storage の理由
+
+```text
+Notes typed by the user are saved with chrome.storage.local, so they are still there the next time the memo pad is opened. The notes stay in the user's own browser and are never sent anywhere.
+```
+
+### sidePanel の理由
+
+```text
+The memo pad can be opened in the browser's side panel so the user can keep a note visible while reading or working on a page. The popup closes as soon as the user clicks the page, so the side panel is the only way to keep the note open beside it. The permission is used only to open this extension's own page in the side panel; it gives no access to the content of the pages the user visits.
+```
+
+### データ使用（Data usage）
+
+収集するデータは無いので、どの項目にもチェックを入れない。下の 3 つの証明には
+すべて同意する（売らない・用途外に使わない・信用力の判断に使わない）。
+
 ## プライバシーポリシー URL
 
 ストアの掲載情報の「プライバシーポリシーのURL」欄に入れる。
