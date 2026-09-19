@@ -3,7 +3,7 @@
   "version": "1.6.0",
   "manifest_version": 3,
   "minimum_chrome_version": "116",
-  "description": "This app is a simple memo pad.",
+  "description": "A simple memo pad. Keep autosaved notes in tabs, in a popup or the side panel.",
   "icons": {
     "16": "img/icon/16.png",
     "48": "img/icon/48.png",
