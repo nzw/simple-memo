@@ -1,6 +1,6 @@
 {
   "name": "SimpleMemoPad",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "manifest_version": 3,
   "minimum_chrome_version": "116",
   "description": "A simple memo pad. Keep autosaved notes in tabs, in a popup or the side panel.",
@@ -24,6 +24,9 @@
             "mac": "MacCtrl+Shift+Z"
         }
     }
+  },
+  "background": {
+    "service_worker": "js/background.js"
   },
   "side_panel": {
     "default_path": "popup.html?mode=panel"

@@ -107,3 +107,20 @@
     margin-right: 10px;
     color: skyblue;
 }
+
+.sync-warn,
+.sync-msg {
+    display: block;
+    margin: 4px 10px 0 0;
+    color: #b56969;
+    font-size: 12px;
+}
+
+.sync-warn[hidden],
+.sync-msg[hidden] {
+    display: none;
+}
+
+.sync-msg {
+    margin: 0 1em 16px;
+}
