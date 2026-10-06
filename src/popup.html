@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/icon.css">
     <link rel="stylesheet" href="css/tab.css">
+    <link rel="stylesheet" href="lib/hljs.css">
+    <link rel="stylesheet" href="css/preview.css">
     <script src="js/mode.js"></script>
 </head>
 <body>
@@ -25,6 +27,7 @@
           <option value="5">5em</option>
         </select>
       </label>
+      <button type="button" id="images" class="img-btn" title="画像ストックを開く">画像</button>
     </div>
     <div class="cp_tab">
         <div id="tab-bar" class="tab-bar" role="tablist"></div>
@@ -44,7 +47,25 @@
             <span>サイドパネルに固定</span>
         </a>
     </div>
+    <div id="gallery" class="gallery" hidden>
+        <div class="gallery-head">
+            <strong>画像ストック</strong>
+            <span id="gallery-info"></span>
+            <button type="button" id="gallery-add">追加</button>
+            <button type="button" id="gallery-close">閉じる</button>
+        </div>
+        <p class="gallery-note">この PC にだけ保存され、ほかの端末とは同期されません。</p>
+        <div id="gallery-list" class="gallery-list"></div>
+        <input type="file" id="gallery-file" accept="image/*" multiple hidden>
+    </div>
+    <script src="lib/purify.min.js"></script>
+    <script src="lib/marked.umd.js"></script>
+    <script src="lib/highlight.min.js"></script>
+    <script src="js/calc.js"></script>
+    <script src="js/images.js"></script>
+    <script src="js/preview.js"></script>
     <script src="js/tabs.js"></script>
+    <script src="js/gallery.js"></script>
     <script src="js/zoom.js"></script>
     <script src="js/download.js"></script>
     <script src="js/pin.js"></script>

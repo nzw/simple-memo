@@ -6,7 +6,7 @@ try {
   if (!zoomIn) throw new Error("Zoom-in button not found");
 
   zoomIn.addEventListener('click', () => {
-    let textareas = document.querySelectorAll('.contents');
+    let textareas = document.querySelectorAll('.contents, .preview');
     if (!textareas.length) throw new Error("Textareas not found");
 
     let body = document.body;
@@ -22,7 +22,7 @@ try {
   if (!zoomOut) throw new Error("Zoom-out button not found");
 
   zoomOut.addEventListener('click', () => {
-    let textareas = document.querySelectorAll('.contents');
+    let textareas = document.querySelectorAll('.contents, .preview');
     if (!textareas.length) throw new Error("Textareas not found");
 
     let body = document.body;
@@ -38,7 +38,7 @@ try {
   if (!fontSize) throw new Error("Font-size control not found");
 
   fontSize.addEventListener('change', (e) => {
-    let textareas = document.querySelectorAll('.contents');
+    let textareas = document.querySelectorAll('.contents, .preview');
     if (!textareas.length) throw new Error("Textareas not found");
 
     let body = document.body;

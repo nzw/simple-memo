@@ -5,6 +5,8 @@
 //                  (unchanged since v1.x, so existing memos load as they are)
 //   save_ids     = [tabId1, ..., tabIdN]  stable ids so background.js can sync tabs
 //                  with other computers even after they are added, deleted or moved
+//   save_modes   = { tabId: 'preview' }  tabs shown as a rendered preview (the rest are edited).
+//                  Local only: not synced, and not part of save_content
 //   sync_status  = { tooLong: [tabId, ...], error }  written by background.js
 const MAX_TABS = 20;
 const DEFAULT_TABS = 7;
@@ -33,6 +35,7 @@ try {
   let dragFrom = null;
   let syncStatus = { tooLong: [], error: null };
   let lastInput = 0;
+  let modes = {};
 
   const tabs = () => [...tabBar.querySelectorAll('.tab')];
   const panels = () => [...tabPanels.querySelectorAll('.cp_tabpanel')];
@@ -42,9 +45,12 @@ try {
   const save = () => {
     let saveContents = textareas().map((textarea) => textarea.value);
     saveContents.push(String(selected + 1));
+    let ids = panels().map((panel) => panel.dataset.id);
+    modes = Object.fromEntries(Object.entries(modes).filter(([id]) => ids.includes(id)));
     chrome.storage.local.set({
       'save_content': saveContents,
-      'save_ids': panels().map((panel) => panel.dataset.id),
+      'save_ids': ids,
+      'save_modes': modes,
     });
   };
 
@@ -58,6 +64,48 @@ try {
     }
     return `同期に失敗しました（${error}）`;
   };
+
+  // Show the textarea or the rendered preview, and re-render when the text changed.
+  const updateView = (panel, text) => {
+    let preview = modes[panel.dataset.id] === 'preview';
+    panel.classList.toggle('preview-mode', preview);
+    let toggle = panel.querySelector('.view-toggle');
+    toggle.textContent = preview ? '編集' : 'プレビュー';
+    toggle.title = preview ? '編集に戻る' : 'Markdown・コード・図・計算を表示';
+    if (preview && panel.classList.contains('show') && panel.dataset.rendered !== text) {
+      panel.dataset.rendered = text;
+      MemoPreview.render(panel.querySelector('.preview'), text);
+    }
+  };
+
+  const toggleView = (panel) => {
+    let id = panel.dataset.id;
+    if (modes[id] === 'preview') delete modes[id];
+    else modes[id] = 'preview';
+    delete panel.dataset.rendered;
+    refresh();
+    save();
+    if (modes[id] !== 'preview') panel.querySelector('.contents').focus();
+  };
+
+  const insertText = (textarea, text) => {
+    textarea.setRangeText(text, textarea.selectionStart, textarea.selectionEnd, 'end');
+    textarea.dispatchEvent(new Event('input'));
+    textarea.focus();
+  };
+
+  // Pasted / dropped image files go to the image stock, and the memo gets a reference.
+  const addImages = async (textarea, files) => {
+    for (let file of files) {
+      try {
+        insertText(textarea, `${MemoImages.markdown(await MemoImages.add(file))}\n`);
+      } catch (e) {
+        syncMsg.textContent = `画像を保存できませんでした（${e.message || e}）`;
+        syncMsg.hidden = false;
+      }
+    }
+  };
+  const imageFiles = (list) => [...(list || [])].filter((file) => file.type.startsWith('image/'));
 
   // Sync every tab's number, state and counter with the current DOM order.
   const refresh = () => {
@@ -81,6 +129,7 @@ try {
       del.title = empty ? 'タブを削除' : '中身を消すと削除できます';
 
       panelList[index].classList.toggle('show', active);
+      updateView(panelList[index], values[index]);
       panelList[index].querySelector('.char-right').textContent = `length: ${values[index].length}`;
       panelList[index].querySelector('.sync-warn').hidden = !syncStatus.tooLong.includes(panelList[index].dataset.id);
     });
@@ -113,16 +162,25 @@ try {
     panel.className = 'cp_tabpanel';
     let textarea = document.createElement('textarea');
     textarea.className = 'contents';
+    let preview = document.createElement('div');
+    preview.className = 'preview';
     // Carry over the zoom / font size already applied to the other tabs.
     let current = tabPanels.querySelector('.contents');
-    if (current) textarea.style.cssText = current.style.cssText;
+    if (current) textarea.style.cssText = preview.style.cssText = current.style.cssText;
+    let toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'view-toggle';
+    toggle.addEventListener('click', () => toggleView(panel));
     let length = document.createElement('span');
     length.className = 'char-right';
     let warn = document.createElement('span');
     warn.className = 'sync-warn';
     warn.textContent = 'このタブは長すぎるため、ほかの端末と同期されません（1 タブ約 8KB、日本語で約 2,700 字まで）';
     warn.hidden = true;
-    panel.append(textarea, length, warn);
+    let bar = document.createElement('div');
+    bar.className = 'panel-bar';
+    bar.append(toggle, length);
+    panel.append(textarea, preview, bar, warn);
     tabPanels.appendChild(panel);
 
     textarea.addEventListener('input', () => {
@@ -130,8 +188,32 @@ try {
       refresh();
       save();
     });
+
+    textarea.addEventListener('paste', (e) => {
+      let files = imageFiles(e.clipboardData.files);
+      if (!files.length) return;
+      e.preventDefault();
+      addImages(textarea, files);
+    });
+    textarea.addEventListener('dragover', (e) => {
+      if (imageFiles(e.dataTransfer.files).length || [...e.dataTransfer.items].some((i) => i.kind === 'file')) e.preventDefault();
+    });
+    textarea.addEventListener('drop', (e) => {
+      let files = imageFiles(e.dataTransfer.files);
+      if (!files.length) return;
+      e.preventDefault();
+      addImages(textarea, files);
+    });
     return textarea;
   };
+
+  // The image gallery asks for a reference to be put into the current memo.
+  document.addEventListener('memo-insert-image', (e) => {
+    let panel = panels()[selected];
+    if (!panel) return;
+    if (modes[panel.dataset.id] === 'preview') toggleView(panel);
+    insertText(panel.querySelector('.contents'), `${MemoImages.markdown(e.detail.id)}\n`);
+  });
 
   // Show `list` (memo texts) in the order of `ids`, reusing the tabs that already
   // exist so a textarea is never moved (moving it would drop its focus).
@@ -288,7 +370,8 @@ try {
   let defaultIds = Array.from({ length: DEFAULT_TABS }, newId);
   render(defaultIds.map(() => ''), defaultIds, defaultIds[0]);
 
-  chrome.storage.local.get(['save_content', 'save_ids', 'sync_status'], (items) => {
+  chrome.storage.local.get(['save_content', 'save_ids', 'save_modes', 'sync_status'], (items) => {
+    modes = items.save_modes || {};
     let saveContents = items.save_content || [];
     let list = saveContents.slice(0, -1);
     let ids = items.save_ids || [];
@@ -320,6 +403,10 @@ try {
 
     if (changes.sync_status) {
       syncStatus = changes.sync_status.newValue || { tooLong: [], error: null };
+      refresh();
+    }
+    if (changes.save_modes) {
+      modes = changes.save_modes.newValue || {};
       refresh();
     }
     if (!changes.save_content && !changes.save_ids) return;
