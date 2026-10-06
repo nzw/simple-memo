@@ -179,7 +179,25 @@ try {
     warn.hidden = true;
     let bar = document.createElement('div');
     bar.className = 'panel-bar';
-    bar.append(toggle, length);
+    let imgBtn = document.createElement('button');
+    imgBtn.type = 'button';
+    imgBtn.className = 'view-toggle';
+    imgBtn.textContent = '画像を挿入';
+    imgBtn.title = 'カーソル位置に画像を挿入（貼り付け・ドロップも可）';
+    let imgInput = document.createElement('input');
+    imgInput.type = 'file';
+    imgInput.accept = 'image/*';
+    imgInput.multiple = true;
+    imgInput.hidden = true;
+    imgBtn.addEventListener('click', () => imgInput.click());
+    imgInput.addEventListener('change', () => {
+      addImages(textarea, imageFiles(imgInput.files));
+      imgInput.value = '';
+    });
+    let left = document.createElement('span');
+    left.className = 'panel-bar-left';
+    left.append(toggle, imgBtn, imgInput);
+    bar.append(left, length);
     panel.append(textarea, preview, bar, warn);
     tabPanels.appendChild(panel);
 
@@ -189,6 +207,16 @@ try {
       save();
     });
 
+    // Files can also be dropped on the preview: they go in at the caret of the memo.
+    preview.addEventListener('dragover', (e) => {
+      if ([...e.dataTransfer.items].some((i) => i.kind === 'file')) e.preventDefault();
+    });
+    preview.addEventListener('drop', (e) => {
+      let files = imageFiles(e.dataTransfer.files);
+      if (!files.length) return;
+      e.preventDefault();
+      addImages(textarea, files);
+    });
     textarea.addEventListener('paste', (e) => {
       let files = imageFiles(e.clipboardData.files);
       if (!files.length) return;

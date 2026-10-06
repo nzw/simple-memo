@@ -82,6 +82,8 @@ const MemoPreview = (() => {
         return;
       }
       let id = src.slice(IMG_PREFIX.length);
+      img.dataset.imgId = id;
+      img.title = 'クリックで拡大';
       img.removeAttribute('src');
       try {
         let url = await MemoImages.url(id);

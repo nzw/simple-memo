@@ -58,6 +58,13 @@
         <div id="gallery-list" class="gallery-list"></div>
         <input type="file" id="gallery-file" accept="image/*" multiple hidden>
     </div>
+    <div id="lightbox" class="lightbox" hidden>
+        <div class="lightbox-bar">
+            <button type="button" id="lightbox-dl">ダウンロード</button>
+            <button type="button" id="lightbox-close">閉じる</button>
+        </div>
+        <img id="lightbox-img" alt="">
+    </div>
     <script src="lib/purify.min.js"></script>
     <script src="lib/marked.umd.js"></script>
     <script src="lib/highlight.min.js"></script>
