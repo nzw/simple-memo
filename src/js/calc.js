@@ -21,24 +21,24 @@ const MemoCalc = (() => {
       return value;
     };
 
-    // term := power (('*' | '/' | '%') power)*
+    // term := unary (('*' | '/' | '%') power)*
     const term = () => {
-      let value = power();
+      let value = unary();
       for (skip(); peek() === '*' || peek() === '/' || peek() === '%'; skip()) {
         let op = src[pos++];
-        let rhs = power();
+        let rhs = unary();
         value = op === '*' ? value * rhs : op === '/' ? value / rhs : value % rhs;
       }
       return value;
     };
 
-    // power := unary ('^' power)?   (right-associative)
+    // power := atom ('^' unary)?   (right-associative; "-2^2" is -(2^2), "2^-1" is 0.5)
     const power = () => {
-      let base = unary();
+      let base = atom();
       skip();
       if (peek() === '^') {
         pos += 1;
-        return Math.pow(base, power());
+        return Math.pow(base, unary());
       }
       return base;
     };
@@ -47,7 +47,7 @@ const MemoCalc = (() => {
       skip();
       if (peek() === '-') { pos += 1; return -unary(); }
       if (peek() === '+') { pos += 1; return unary(); }
-      return atom();
+      return power();
     };
 
     const atom = () => {
@@ -102,6 +102,8 @@ const MemoCalc = (() => {
     if (!marked) {
       if (!/[+\-*/%^]/.test(s.replace(/^[-+]/, ''))) return null;
       if (/^\d+(-\d+)+$/.test(s)) return null;
+      // ... or a slash date / fraction ("2026/10/06", "10/6"); "= 10/6" still calculates.
+      if (/^\d+(\/\d+)+$/.test(s)) return null;
     }
 
     try {
