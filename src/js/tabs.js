@@ -212,10 +212,9 @@ try {
       if ([...e.dataTransfer.items].some((i) => i.kind === 'file')) e.preventDefault();
     });
     preview.addEventListener('drop', (e) => {
-      let files = imageFiles(e.dataTransfer.files);
-      if (!files.length) return;
+      if (!e.dataTransfer.files.length) return;
       e.preventDefault();
-      addImages(textarea, files);
+      addImages(textarea, imageFiles(e.dataTransfer.files));
     });
     textarea.addEventListener('paste', (e) => {
       let files = imageFiles(e.clipboardData.files);
@@ -224,16 +223,22 @@ try {
       addImages(textarea, files);
     });
     textarea.addEventListener('dragover', (e) => {
-      if (imageFiles(e.dataTransfer.files).length || [...e.dataTransfer.items].some((i) => i.kind === 'file')) e.preventDefault();
+      if ([...e.dataTransfer.items].some((i) => i.kind === 'file')) e.preventDefault();
     });
+    // Any dropped file is handled here: if it were left alone, Chrome would open it in the popup.
     textarea.addEventListener('drop', (e) => {
-      let files = imageFiles(e.dataTransfer.files);
-      if (!files.length) return;
+      if (!e.dataTransfer.files.length) return;
       e.preventDefault();
-      addImages(textarea, files);
+      addImages(textarea, imageFiles(e.dataTransfer.files));
     });
     return textarea;
   };
+
+  // Images were added to / removed from the stock: previews may show stale placeholders or dead images.
+  document.addEventListener('memo-images-changed', () => {
+    panels().forEach((panel) => { delete panel.dataset.rendered; });
+    refresh();
+  });
 
   // The image gallery asks for a reference to be put into the current memo.
   document.addEventListener('memo-insert-image', (e) => {
@@ -408,6 +413,7 @@ try {
 
     if (!list.length) {
       // First run: keep the default tabs and save them, which gives them ids.
+      refresh();
       save();
     } else {
       // Memos saved before v1.7.0 have no ids yet.

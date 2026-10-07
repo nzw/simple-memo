@@ -87,8 +87,18 @@ try {
       del.type = 'button';
       del.textContent = '削除';
       del.title = used.has(image.id) ? 'メモから参照されています。消すとプレビューに出なくなります' : '削除';
+      // An image a memo still refers to is deleted on the second click: it cannot be undone
+      // and no other computer has a copy.
+      let armed = false;
       del.addEventListener('click', async () => {
+        if (used.has(image.id) && !armed) {
+          armed = true;
+          del.textContent = '本当に削除';
+          setTimeout(() => { armed = false; del.textContent = '削除'; }, 4000);
+          return;
+        }
         await MemoImages.remove(image.id);
+        document.dispatchEvent(new Event('memo-images-changed'));
         show();
       });
       item.append(img, meta, insert, save, del);
@@ -107,6 +117,7 @@ try {
       try { await MemoImages.add(file); } catch (e) { console.error(e); }
     }
     fileInput.value = '';
+    document.dispatchEvent(new Event('memo-images-changed'));
     show();
   });
 } catch (error) {

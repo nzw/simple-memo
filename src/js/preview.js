@@ -51,12 +51,14 @@ const MemoPreview = (() => {
 
   const drawMermaid = async (code) => {
     let source = code.textContent;
+    let renderId = null;
     let box = document.createElement('div');
     box.className = 'mermaid-box';
     code.closest('pre').replaceWith(box);
     try {
       await loadMermaid();
-      let { svg } = await mermaid.render(`mermaid-${Date.now()}-${mermaidSeq++}`, source);
+      renderId = `mermaid-${Date.now()}-${mermaidSeq++}`;
+      let { svg } = await mermaid.render(renderId, source);
       box.innerHTML = svg;
     } catch (e) {
       box.classList.add('mermaid-error');
@@ -65,8 +67,8 @@ const MemoPreview = (() => {
       let pre = document.createElement('pre');
       pre.textContent = source;
       box.replaceChildren(msg, pre);
-      // mermaid leaves its error graph in <body> on failure
-      document.querySelectorAll('[id^="dmermaid-"]').forEach((el) => el.remove());
+      // mermaid leaves this render's error graph in <body> on failure (only ours: other renders may be running)
+      if (renderId) document.getElementById(`d${renderId}`)?.remove();
     }
   };
 
@@ -99,7 +101,7 @@ const MemoPreview = (() => {
     });
   };
 
-  // Fill `el` with the rendered `text`. A newer call for the same element wins.
+  // Fill `el` with the rendered `text`.
   const render = (el, text) => {
     let html = DOMPurify.sanitize(marked.parse(addCalc(text)), purifyConfig);
     let doc = new DOMParser().parseFromString(html, 'text/html');
